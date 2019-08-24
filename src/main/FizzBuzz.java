@@ -1,15 +1,31 @@
+
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FizzBuzz {
 
-    public List<String> doFizzBuzz(Integer lowerRange, Integer upperRange) {
+    private FizzBuzzOutput output = new FizzBuzzOutput();
+
+    public FizzBuzzOutput doFizzBuzz(Integer lowerRange, Integer upperRange) {
+        Map<String, Integer> mapFizzBuzz = new HashMap<>();
         List<String> fizzBuzzOutput = new ArrayList<>();
         for (int i = lowerRange; i<= upperRange; i++) {
             String fizzBuzzResult = checkFizzBuzz(i);
+            if(isNumeric(fizzBuzzResult)) {
+                Integer count = mapFizzBuzz.containsKey(FizzBuzzConstants.INTEGER_STRING) ? mapFizzBuzz.get(FizzBuzzConstants.INTEGER_STRING) : 0;
+                mapFizzBuzz.put(FizzBuzzConstants.INTEGER_STRING, count + 1);
+            } else {
+                Integer count = mapFizzBuzz.containsKey(fizzBuzzResult) ? mapFizzBuzz.get(fizzBuzzResult) : 0;
+                mapFizzBuzz.put(fizzBuzzResult, count + 1);
+            }
             fizzBuzzOutput.add(fizzBuzzResult);
         }
-        return fizzBuzzOutput;
+        output.setOutputStatistics(mapFizzBuzz);
+        output.setOutputString(fizzBuzzOutput);
+        return output;
     }
 
     public String checkFizzBuzz(Integer numberToCheck) {
@@ -30,5 +46,20 @@ public class FizzBuzz {
             }
         }
         return false;
+    }
+
+    private boolean isNumeric(String stringToCheck) {
+        for (char c: stringToCheck.toCharArray()) {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
+    }
+
+    public FizzBuzzOutput getOutput() {
+        return output;
+    }
+
+    public void setOutput(FizzBuzzOutput output) {
+        this.output = output;
     }
 }

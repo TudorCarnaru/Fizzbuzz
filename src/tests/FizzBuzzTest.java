@@ -28,11 +28,17 @@ class FizzBuzzTest {
 
 
     @Test
-    public void testRange() {
-        assertEquals(fizzBuzz.doFizzBuzz(1, 20).get(14), FizzBuzzConstants.FIZZ_BUZZ_STRING);
-        assertEquals(fizzBuzz.doFizzBuzz(1, 20).get(2), FizzBuzzConstants.ALFRESCO_STRING);
-        assertEquals(fizzBuzz.doFizzBuzz(1, 20).get(4), FizzBuzzConstants.BUZZ_STRING);
-        assertEquals(fizzBuzz.doFizzBuzz(1, 20).get(5), FizzBuzzConstants.FIZZ_STRING);
+    public void testRangeAndReport() {
+        assertEquals(fizzBuzz.doFizzBuzz(1, 20).getOutputString().get(14), FizzBuzzConstants.FIZZ_BUZZ_STRING);
+        assertEquals(fizzBuzz.doFizzBuzz(1, 20).getOutputString().get(2), FizzBuzzConstants.ALFRESCO_STRING);
+        assertEquals(fizzBuzz.doFizzBuzz(1, 20).getOutputString().get(4), FizzBuzzConstants.BUZZ_STRING);
+        assertEquals(fizzBuzz.doFizzBuzz(1, 20).getOutputString().get(5), FizzBuzzConstants.FIZZ_STRING);
+
+        assertEquals(fizzBuzz.getOutput().getOutputStatistics().get(FizzBuzzConstants.FIZZ_STRING), new Integer(4));
+        assertEquals(fizzBuzz.getOutput().getOutputStatistics().get(FizzBuzzConstants.BUZZ_STRING), new Integer(3));
+        assertEquals(fizzBuzz.getOutput().getOutputStatistics().get(FizzBuzzConstants.FIZZ_BUZZ_STRING), new Integer(1));
+        assertEquals(fizzBuzz.getOutput().getOutputStatistics().get(FizzBuzzConstants.ALFRESCO_STRING), new Integer(2));
+        assertEquals(fizzBuzz.getOutput().getOutputStatistics().get(FizzBuzzConstants.INTEGER_STRING), new Integer(10));
     }
 
 }
