@@ -1,31 +1,27 @@
-import Application.Main;
 import Application.Services.FizzBuzzService;
 import Application.UtilConstants.FizzBuzzConstants;
-import io.restassured.http.ContentType;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Main.class)
+
 class FizzBuzzServiceTest {
 
     FizzBuzzService fizzBuzzService = new FizzBuzzService();
 
     private String lowerBound = "lowerBound";
     private String upperBound = "upperBound";
-    private String localHost = "localhost:8080/";
+    private String localHost = "http://localhost:8181";
 
 
     private String badLowerRange= "-1";
+    private String badUpperRangeInteger = "-20";
     private String badUpperRange = "badString";
 
 
@@ -71,22 +67,41 @@ class FizzBuzzServiceTest {
 
     @Test
     public void testRangeAndReportBadRange() {
-        Throwable exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badUpperRange, badUpperRange));
+        Throwable exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badLowerRange, badUpperRangeInteger));
         assertEquals(FizzBuzzConstants.INVALID_RANGE_EXCEPTION, exception.getMessage());
 
-        exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badLowerRange, badLowerRange));
+        exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badUpperRange, badUpperRange));
         assertEquals("For input string: \"badString\"", exception.getMessage());
     }
 
     @Test
-    public void integrationTestFizzBuzzEndpoint() {
-        JSONObject requestParams = new JSONObject();
+    public void test() {
+       when().get(localHost).then().statusCode(HttpStatus.OK.value());
+    }
 
+    @Test
+    public void integrationTestFizzBuzzEndpointGoodInput() {
+        JSONObject requestParams = new JSONObject();
         try {
             requestParams.put(lowerBound, "1");
             requestParams.put(upperBound, "20");
             given().contentType(MediaType.APPLICATION_JSON.toString())
-                    .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+                    .body(requestParams.toString()).post(localHost + FizzBuzzConstants.FIZZ_BUZZ_ENDPOINT)
+                    .then()
+                    .statusCode(HttpStatus.OK.value()).log().all();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void integrationTestFizzBuzzEndpointWorking() {
+        JSONObject requestParams = new JSONObject();
+        try {
+            requestParams.put(lowerBound, "1");
+            requestParams.put(upperBound, badUpperRange);
+            given().contentType(MediaType.APPLICATION_JSON.toString())
                     .body(requestParams.toString()).post(localHost + FizzBuzzConstants.FIZZ_BUZZ_ENDPOINT)
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value()).log().all();

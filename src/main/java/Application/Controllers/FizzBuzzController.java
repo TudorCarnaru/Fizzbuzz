@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping(value = "/")
 public class FizzBuzzController {
@@ -22,10 +23,14 @@ public class FizzBuzzController {
         this.fizzBuzzService = fizzBuzzService;
     }
 
-    @PostMapping(value = FizzBuzzConstants.FIZZ_BUZZ_ENDPOINT)
+    @GetMapping(value = "")
+    public ResponseEntity get() {
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping(value = FizzBuzzConstants.FIZZ_BUZZ_ENDPOINT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity doFizzBuzz(@RequestBody FizzBuzzRequest fizzBuzzRequest) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
         FizzBuzzOutput output;
         try {
             output = fizzBuzzService.doFizzBuzz(fizzBuzzRequest.getLowerBound(), fizzBuzzRequest.getUpperBound());

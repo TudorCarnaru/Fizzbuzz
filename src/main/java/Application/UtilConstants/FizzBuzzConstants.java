@@ -7,7 +7,7 @@ public class FizzBuzzConstants {
     public static final String ALFRESCO_STRING = "alfresco";
     public static final String INTEGER_STRING = "integer";
 
-    public static final String FIZZ_BUZZ_ENDPOINT = "fizzBuzz";
+    public static final String FIZZ_BUZZ_ENDPOINT = "/fizzBuzz";
 
     public static final String INVALID_RANGE_EXCEPTION = "Not a valid integer range";
 

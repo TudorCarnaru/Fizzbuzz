@@ -1,6 +1,11 @@
 package Application.EntitiesDto;
 
-public class FizzBuzzRequest {
+import java.io.Serializable;
+
+public class FizzBuzzRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String lowerBound;
     private String upperBound;
 
