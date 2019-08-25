@@ -12,4 +12,6 @@ public class FizzBuzzConstants {
     public static final String INVALID_RANGE_EXCEPTION = "Not a valid integer range";
 
     public static final String CHECK_NUMERICAL_REGEX = "[0-9]+";
+    public static final String ANGULAR_HOST = "http://localhost:4200";
+    public static final String TEXT_IN_RANGE_EXCEPTION = "Please insert only numbers in the range input";
 }

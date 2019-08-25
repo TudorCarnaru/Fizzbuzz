@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/")
+@CrossOrigin(origins = FizzBuzzConstants.ANGULAR_HOST)
 public class FizzBuzzController {
 
     private final FizzBuzzService fizzBuzzService;

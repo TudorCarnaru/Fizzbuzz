@@ -17,6 +17,9 @@ public class FizzBuzzService {
         Map<String, Integer> mapFizzBuzz = new HashMap<>();
         List<String> fizzBuzzOutput = new ArrayList<>();
         try {
+            if(lowerRangeInput.equals("") || upperRangeInput.equals("")) {
+                throw new Exception(FizzBuzzConstants.INVALID_RANGE_EXCEPTION);
+            }
             Integer lowerRange = Integer.parseInt(lowerRangeInput);
             Integer upperRange = Integer.parseInt(upperRangeInput);
             if(lowerRange > upperRange || lowerRange < 0 || upperRange < 0) {
@@ -34,7 +37,10 @@ public class FizzBuzzService {
                 fizzBuzzOutput.add(fizzBuzzResult);
             }
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            if(e.getMessage().equals(FizzBuzzConstants.INVALID_RANGE_EXCEPTION)) {
+                throw new Exception(e.getMessage());
+            }
+            else throw new Exception(FizzBuzzConstants.TEXT_IN_RANGE_EXCEPTION);
         }
         output.setOutputStatistics(mapFizzBuzz);
         output.setOutputString(fizzBuzzOutput);

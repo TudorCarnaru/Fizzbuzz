@@ -70,8 +70,11 @@ class FizzBuzzServiceTest {
         Throwable exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badLowerRange, badUpperRangeInteger));
         assertEquals(FizzBuzzConstants.INVALID_RANGE_EXCEPTION, exception.getMessage());
 
+        exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz("", ""));
+        assertEquals(FizzBuzzConstants.INVALID_RANGE_EXCEPTION, exception.getMessage());
+
         exception = assertThrows(Exception.class, () -> fizzBuzzService.doFizzBuzz(badUpperRange, badUpperRange));
-        assertEquals("For input string: \"badString\"", exception.getMessage());
+        assertEquals(FizzBuzzConstants.TEXT_IN_RANGE_EXCEPTION, exception.getMessage());
     }
 
     @Test
